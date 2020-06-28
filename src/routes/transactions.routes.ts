@@ -43,7 +43,7 @@ transactionsRouter.delete('/:id', async (request, response) => {
 
   await deleteTranscation.execute({ id });
 
-  return response.send();
+  return response.status(204).send();
 });
 
 transactionsRouter.post(

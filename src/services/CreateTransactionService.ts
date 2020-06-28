@@ -27,11 +27,11 @@ class CreateTransactionService {
       },
     });
 
-    // if(checkCategoryExists)
-    const categoryObj =
-      checkCategoryExists || categoriesRepository.create({ title: category });
-
-    await categoriesRepository.save(categoryObj);
+    const transactionCategory =
+      checkCategoryExists ||
+      (await categoriesRepository.save(
+        categoriesRepository.create({ title: category }),
+      ));
 
     const transactionsRepository = getCustomRepository(TransactionsRepository);
 
@@ -45,7 +45,7 @@ class CreateTransactionService {
       title,
       type,
       value,
-      category: categoryObj,
+      category: transactionCategory,
     });
 
     await transactionsRepository.save(transaction);
